@@ -522,7 +522,7 @@
   }
   .article-hero-carousel .modal-carousel-slides{display:flex;height:100%;transition:transform .4s cubic-bezier(.4,0,.2,1);}
   .article-hero-carousel .modal-carousel-slide{min-width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
-  .article-hero-carousel .modal-carousel-slide img{width:100%;height:100%;object-fit:cover;display:block;}
+  .article-hero-carousel .modal-carousel-slide img{width:100%;height:100%;object-fit:contain;display:block;}
 
   .article-body{padding:1.8rem 2rem 2.2rem;}
   .article-header{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.8rem;}
@@ -957,7 +957,7 @@
   <div class="divider"></div>
 
   <!--
-    ✏️ SEMINARS SECTION
+    ✏️ AWARDSANDFEATS SECTION
     To add more coverflow sections: copy this block, change all IDs,
     add a new data array in JS, and call buildCoverflow() in BOOT.
   -->
@@ -976,7 +976,7 @@
 
   <div class="divider"></div>
 
-  <div class="section-wrap" id="about">
+  <div class="section-wrap" id="aboutA">
     <div class="section-header reveal">
       <span class="section-tag">04</span>
       <h2 class="section-title">About Me</h2>
@@ -1045,7 +1045,7 @@
   <div class="divider"></div>
 
   <!--
-    ✏️ SEMINARS SECTION
+    ✏️ AWARDSANDFEATS SECTION
     To add more coverflow sections: copy this block, change all IDs,
     add a new data array in JS, and call buildCoverflow() in BOOT.
   -->
@@ -1124,7 +1124,7 @@
      desc         — short card description
      detailedDesc — longer modal description (paragraphs separated by blank line)
 
-   COVERFLOW FIELDS (BADGES, SEMINARS, any new section):
+   COVERFLOW FIELDS (BADGES, AWARDSANDFEATS, any new section):
      name    — card title
      sub     — subtitle / issuer line
      icon    — emoji fallback when no img
@@ -1152,6 +1152,7 @@ const PROJECTS_A = [
       '2023'
     ],
     link: 'https://drive.google.com/file/d/15u-Y5_2e6t5UCMyFUG8S47Ek6GH6_EX4/view?usp=drive_link',
+    linkLabel: 'Read Paper',
     images: ['Assets/Dev/ProjectHydrofalis/projectHydrofalis_1.mp4', 'Assets/Dev/ProjectHydrofalis/projectHydrofalis_2.png', 'Assets/Dev/ProjectHydrofalis/projectHydrofalis_3.png'],
     desc: 'Award-winning Arduino-based smart water filtration system. Principal Researcher — championed FEU High School ICT Research Fair and competed in UP SquEEEze 2023.',
     detailedDesc: `Project Hydrofalis is a smart water filtration system built using Arduino, designed to monitor and improve water quality in real time through integrated sensors and automated filtration mechanisms.
@@ -1165,8 +1166,9 @@ const PROJECTS_A = [
   {
       title: 'Hilo',
       tags: ['SaaS', 'Productivity', 'Creative Tech', 'Mental Wellness', 'Project Proposal', 'Visual Planning', 'Hackathon', 'CPeO', 'Create & Conquer 2025', '2025'],
+      linkLabel: 'Read PRoject Proposal',
       link: 'https://drive.google.com/file/d/1hKgoW_0NnRVqz2QE69DvaU1x_ajviDjL/view?usp=sharing',
-      images: ['Assets/Dev/Hilo/hilo_1.png','Assets/Dev/Hilo/hilo_2.png','Assets/Dev/Hilo/hilo_3.png','Assets/Dev/Hilo/hilo_4.png','Assets/Dev/Hilo/hilo_5.png','Assets/Dev/Hilo/hilo_6.png','Assets/Dev/Hilo/hilo_7.png','Assets/Dev/Hilo/hilo_8.png', 'Assets/Dev/Hilo/hilo_9.png'],
+      images: ['Assets/Dev/Hilo/hilo_1.png','Assets/AwardsAndFeats/hilo/hiloTrailer.mp4','Assets/Dev/Hilo/hilo_2.png','Assets/Dev/Hilo/hilo_3.png','Assets/Dev/Hilo/hilo_4.png','Assets/Dev/Hilo/hilo_5.png','Assets/Dev/Hilo/hilo_6.png','Assets/Dev/Hilo/hilo_7.png','Assets/Dev/Hilo/hilo_8.png', 'Assets/Dev/Hilo/hilo_9.png'],
       desc: 'A visual-first productivity platform for creatives. Team Lead — developed for CPEO Create & Conquer 2025, an intercollegiate hackathon on productivity innovation.',
       detailedDesc: `Hilo is a non-linear, visual-first productivity platform designed to align with the cognitive workflows of creatives and freelancers. It reimagines traditional task management by prioritizing spatial organization, emotional awareness, and momentum-based progress tracking.
 
@@ -1189,6 +1191,7 @@ const PROJECTS_A = [
       'Environmental Health', 
       'Waste Formalization'
     ],
+    linkLabel: 'Read Project Docket',
     link: 'https://drive.google.com/drive/folders/13KU4ltn1rlz95dlEXnwVmyNMi8yLgZtQ?usp=sharing',
     images: [
       'Assets/Dev/redesignRecoverReuse/redesignRecoverReuse_1.png',
@@ -1353,37 +1356,95 @@ Topics covered included identifying misinformation, understanding media bias, ap
   
 ];
 
-/* ──────── SEMINARS & WORKSHOPS ──────── */
+/* ──────── AWARDSANDFEATS & WORKSHOPS ──────── */
 /*
   ✏️ TO ADD A NEW COVERFLOW SECTION:
   1. Create a data array here with the same shape
   2. Copy the seminars HTML block in the page, change all IDs
   3. Add a buildCoverflow() call in the BOOT section below
 */
-const SEMINARS = [
+const AWARDSANDFEATS = [
   {
-    name: '3rd Place Speaking Competition',
+    name: 'Guest Speaker, F++ 2025',
+    sub: 'FEU Tech ACM Student Chapter · 2025',
+    icon: '🎤', img: '', link: '', images: [
+      'Assets/AwardsAndFeats/fPlusPlus/1.jpg',
+      'Assets/AwardsAndFeats/fPlusPlus/2.jpg',
+      'Assets/AwardsAndFeats/fPlusPlus/3.jpg',
+    ], linkLabel:'',
+    body: `Delivered a talk on navigating the tech and creative industries as a woman in game development and independent graphic design, sharing personal insights and industry experiences.`
+  },
+  {
+    name: 'Guest Speaker & Mentor, Indies Ascent',
+    sub: 'FEU Tech SAGE · 2025',
+    img: '', link: '', 
+    images: [
+      'Assets/AwardsAndFeats/indiesAscent/1.jpg',
+      'Assets/AwardsAndFeats/indiesAscent/2.jpg',
+      'Assets/AwardsAndFeats/indiesAscent/3.jpg'
+    ],
+    body: `Spoke and mentored participants on creative technology, game development, and independent design, guiding aspiring developers through industry realities and creative practice.`
+  },
+  {
+    name: 'Champion, Philippine Voices of Peace Poetry Competition',
+    sub: 'Philippine Voices of Peace · 2025',
+    icon: '🏆', img: '', link: '', images: [
+      'Assets/AwardsAndFeats/voicesOfPeace/1.jpg'
+    ],
+    body: `Won first place in a national poetry competition centered on themes of peace, advocacy, and social awareness. Recognized for impactful writing and delivery.`
+  },
+  {
+    name: '2nd Runner-Up, ESCON Case Presentation Competition',
+    sub: 'University of the Philippines Diliman · 2025',
+    icon: '🥉', img: '', link: '', images: [
+      'Assets/AwardsAndFeats/escon/1.jpg'
+    ],
+    body: `Secured 2nd runner-up presenting an e-waste solution, contributing to research, strategy, and sustainable tech proposals.`
+  },
+  {
+    name: 'Team Lead, Create & Conquer Hackathon',
+    sub: 'FEU Tech CPEO · 2025',
+    icon: '👩‍💻', img: '', link: '', images: [
+      'Assets/AwardsAndFeats/hilo/1.jpg'
+    ],
+    body: `Led a team in a fast-paced hackathon, managing direction, collaboration, and execution under time constraints.`
+  },
+  {
+    name: '2nd Runner-Up, Manila Regional Academic Meet',
     sub: 'YMCA Manila · 2025',
-    icon: '🥉', img: '', link: '', images: [],
-    body: `Placed 3rd in a regional collegiate-level speaking competition hosted by YMCA Manila in 2025. The competition involved extemporaneous and prepared speaking categories judged on delivery, content, and argumentation.`
+    icon: '🥉', img: '', link: '', images: [
+      'Assets/AwardsAndFeats/ymca/1.jpg',
+      'Assets/AwardsAndFeats/ymca/2.jpg',
+      'Assets/AwardsAndFeats/ymca/3.jpg'
+    ],
+    body: `Placed 2nd runner-up in a collegiate-level speaking competition focusing on extemporaneous and prepared speech.`
+  },
+  {
+    name: 'Invited Research Guest Speaker',
+    sub: 'FEU High School Research Fair · 2024',
+    icon: '🎤', img: '', link: '', images: [],
+    body: `Invited to share research insights and experiences with senior high school students, focusing on academic and technical development.`
+  },
+  {
+    name: 'Extemporaneous Speaking Champion',
+    sub: 'FEU Institute of Technology Pilipinas · 2024',
+    icon: '🏆', img: '', link: '', images: [
+      'Assets/AwardsAndFeats/piliPinas/1.jpg',
+      'Assets/AwardsAndFeats/piliPinas/2.jpg'
+    ],
+    body: `Won first place in an extemporaneous speaking competition, demonstrating strong articulation and real-time critical thinking.`
   },
   {
     name: 'Best ICT Research',
     sub: 'FEU High School · 2023',
-    icon: '🔬', img: '', link: '', images: [],
-    body: `Awarded Best ICT Research at the FEU High School Research Fair for Project Hydrofalis — a smart water filtration system utilizing Arduino sensors and automated valves. The project went on to be featured at the 2024 Research Fair where I was invited as a guest speaker.`
-  },
-  {
-    name: 'Academic Excellence',
-    sub: 'FEU High School · A.Y. 2022–23',
-    icon: '⭐', img: '', link: '', images: [],
-    body: `Academic Excellence Awardee for the school year 2022–2023 at Far Eastern University High School. Recognised for maintaining a high academic standing throughout the year.`
+    icon: '💡', img: '', link: '', images: [],
+    body: `Recognized for outstanding ICT research, highlighting innovation and technical execution.`
   },
   {
     name: 'Leadership Award',
-    sub: 'University of the East · 2021',
-    icon: '🏅', img: '', link: '', images: [],
-    body: `Leadership Award recipient at the University of the East for the academic year 2020–2021, in recognition of demonstrated leadership in student activities and organisational roles.`
+    sub: 'University of the East · 2023',
+    icon: '🌟', img: '', link: '', images: [],
+    body: `Awarded for leadership, initiative, and contributions to student activities and community engagement.`
   }
 ];
 
@@ -1489,7 +1550,12 @@ function openModal(p) {
     .split('\n\n').map(para => para.trim() ? `<p style="margin-bottom:.9rem">${para.replace(/\n/g,'<br>')}</p>` : '').join('');
 
   const linkEl = document.getElementById('modalLink');
-  if (p.link) { linkEl.href = p.link; linkEl.style.display = ''; }
+  if (p.link) { 
+    linkEl.href = p.link;
+    linkEl.textContent = '';          
+    linkEl.append(p.linkLabel || 'View Project');
+    linkEl.style.display = '';
+   }
   else { linkEl.style.display = 'none'; }
 
   modalBox.scrollTop = 0;
@@ -1597,12 +1663,12 @@ function buildProjectCard(p, idx) {
   return `
     <div class="proj-card" data-proj-idx="${idx}" style="position:relative;">
       ${buildCarousel(p.images, p.title)}
-      <div class="proj-card-overlay"><span>Click to expand ✦</span></div>
       <div class="proj-body">
         <div class="proj-top"><div class="proj-name">${p.title}</div></div>
         <div class="proj-meta-row">${tags}</div>
         <div class="proj-desc">${p.desc}</div>
       </div>
+      <div class="proj-card-overlay"><span>Click to expand ✦</span></div>
     </div>`;
 }
 
@@ -1768,7 +1834,7 @@ buildCoverflow(BADGES, {
   track: 'certsTrack', dots: 'certsDots',
   prev:  'certPrev',   next: 'certNext'
 });
-buildCoverflow(SEMINARS, {
+buildCoverflow(AWARDSANDFEATS, {
   track: 'semTrack', dots: 'semDots',
   prev:  'semPrev',  next: 'semNext'
 });
@@ -1864,6 +1930,8 @@ const portfolioLabel=document.getElementById('portfolioLabel');
 const footerLabel=document.getElementById('footerLabel');
 const navWork=document.getElementById('navWork');
 const navAbout=document.getElementById('navAbout');
+const navCerts=document.getElementById('navCerts');
+const navAwards=document.getElementById('navAwards');
 const contentA=document.getElementById('contentA');
 const contentB=document.getElementById('contentB');
 let current='a',flipping=false;
@@ -1879,7 +1947,10 @@ flipBtn.addEventListener('click',()=>{
     if(next==='b'){
       logoRole.textContent='Visual Designer';portfolioLabel.textContent='Design Portfolio';
       footerLabel.textContent='Design Portfolio';flipBtn.textContent='✦ View Dev Portfolio';
-      navWork.href='#workB';navAbout.href='#aboutB';navCerts.href='#certsB';navAwards.href='#awardsB';
+      navWork.href='#workB';
+      navCerts.href='#certsB';
+      navAwards.href='#awardsB';
+      navAbout.href='#aboutB';
       contentA.classList.remove('active');contentB.classList.add('active');
       hwB.style.opacity='1';hwB.style.pointerEvents='';
       hwA.style.opacity='0';hwA.style.pointerEvents='none';
@@ -1890,7 +1961,10 @@ flipBtn.addEventListener('click',()=>{
     }else{
       logoRole.textContent='Developer & Designer';portfolioLabel.textContent='Dev Portfolio';
       footerLabel.textContent='Dev Portfolio';flipBtn.textContent='✦ View Design Portfolio';
-      navWork.href='#workA';navAbout.href='#aboutA';navCerts.href='#certsA';navAwards.href='#awardsA';
+      navWork.href='#workA';
+      navCerts.href='#certsA';
+      navAwards.href='#awardsA';
+      navAbout.href='#aboutA';
       contentB.classList.remove('active');contentA.classList.add('active');
       hwA.style.opacity='1';hwA.style.pointerEvents='';
       hwB.style.opacity='0';hwB.style.pointerEvents='none';
