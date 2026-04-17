@@ -105,12 +105,24 @@
   #stars-canvas{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.9;}
 
   nav{
-    position:fixed;top:0;left:0;right:0;z-index:500;
-    display:flex;align-items:center;justify-content:space-between;
-    padding:1.1rem 2.2rem;
-    pointer-events:none;
-    background:linear-gradient(to bottom,rgba(0,0,0,.1) 0%,transparent 100%);
-  }
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 2.2rem;
+  pointer-events:none;
+  background:none;
+}
+nav::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,.6) 0%,transparent 100%);
+  transform:translateY(-100%);
+  transition:transform .6s cubic-bezier(.14,1,.34,1);
+  z-index:-1;
+  pointer-events:none;
+}
+nav.scrolled::before{
+  transform:translateY(0);
+}
   nav>*{pointer-events:all;}
 
   .nav-logo{display:flex;flex-direction:column;gap:.2rem;}
@@ -145,13 +157,21 @@
   }
 
   #flipBtn{
-    font-family:'Space Mono',monospace;font-weight:700;
-    font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;
-    background:var(--text);color:var(--bg);
-    border:none;padding:.7rem 1.5rem;cursor:pointer;
-    clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
-    transition:background var(--flip) ease,color var(--flip) ease,transform .15s;
-  }
+  font-family:'Space Mono',monospace;font-weight:700;
+  font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;
+  background:var(--text);color:var(--bg);
+  border:none;padding:.7rem 1.5rem;cursor:pointer;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+  transition:background var(--flip) ease,color var(--flip) ease,transform .15s,box-shadow .3s;
+}
+#flipBtn.pulse {
+  animation: flipPulse 1.6s ease-in-out infinite;
+}
+@keyframes flipPulse {
+  0%,100% { background: var(--text); color: var(--bg); }
+  50%      { background: var(--accent); color: var(--text); }
+}
+
   #flipBtn:hover{transform:scale(1.05);}
   #flipBtn:disabled{opacity:.35;cursor:default;transform:none;}
 
@@ -1035,9 +1055,10 @@
       <h2 class="section-title">Certifications & Seminars</h2>
     </div>
     <div class="certs-stage">
-      <div class="certs-track" id="certsTrack"></div>
-      <button class="certs-arrow left" id="certPrev">&#8592;</button>
-      <button class="certs-arrow right" id="certNext">&#8594;</button>
+      <div class="certs-track" id="certsTrackB"></div>
+      <button class="certs-arrow left"  id="certPrevB">&#8592;</button>
+      <button class="certs-arrow right" id="certNextB">&#8594;</button>
+      <div class="certs-dots" id="certsDotsB"></div>
     </div>
     <div class="certs-dots" id="certsDots"></div>
   </div>
@@ -1055,9 +1076,10 @@
       <h2 class="section-title">Awards & Features</h2>
     </div>
     <div class="certs-stage">
-      <div class="certs-track" id="semTrack"></div>
-      <button class="certs-arrow left" id="semPrev">&#8592;</button>
-      <button class="certs-arrow right" id="semNext">&#8594;</button>
+      <div class="certs-track" id="semTrackB"></div>
+      <button class="certs-arrow left"  id="semPrevB">&#8592;</button>
+      <button class="certs-arrow right" id="semNextB">&#8594;</button>
+      <div class="certs-dots" id="semDotsB"></div>
     </div>
     <div class="certs-dots" id="semDots"></div>
   </div>
@@ -1136,6 +1158,26 @@
 
 /* ──────── PORTFOLIO A — DEV PROJECTS ──────── */
 const PROJECTS_A = [
+  {
+    title: 'Manipulation',
+    tags: ['UI/UX Design','Godot','Interaction Design', 'Game Design','Art Direction','Visual Design','Indie Game','Roguelite','RPG','Puzzle Mechanics','Usability', 'HUD Design','Creative Direction','Steam Release','2025'],
+    linkLabel:'View Steam Page',
+    link: 'https://store.steampowered.com/app/3937580/Manipulation/',
+    images: [
+      'Assets/Dev/manipulation/1.png',
+      'Assets/Dev/manipulation/manipulationTrailer.mp4',
+      'Assets/Dev/manipulation/2.png',
+      'Assets/Dev/manipulation/3.png',
+      'Assets/Dev/manipulation/4.png',
+      'Assets/Dev/manipulation/5.png'
+    ],
+    desc: 'UI/UX and art direction for an indie roguelite mini-RPG available on Steam.',
+    detailedDesc: `Manipulation is an indie roguelite mini-RPG developed by Creative Guild LLC and released on Steam as the studio’s first title.
+
+I served as the UI/UX designer and art director for the project, shaping the visual experience and user interaction systems. My role involved designing intuitive interfaces, establishing visual direction, and ensuring cohesion between gameplay and presentation.
+
+The game is structured like an escape room — quick but challenging, small but immersive, and designed for replayability. The design approach focused on clarity, feedback, and immersion to support this gameplay loop.`
+  },
   {
     title: 'Project Hydrofalis',
     tags: [
@@ -1280,25 +1322,123 @@ Additional information, including full specifications, technical diagrams, and d
 /* ──────── PORTFOLIO B — DESIGN PROJECTS ──────── */
 const PROJECTS_B = [
   {
-    title: 'BlackCat Studios',
-    tags: ['Brand Identity', 'Client Work', '2019–2023'],
-    link: '', images: [],
-    desc: 'Solo-founded design studio. Logos, brand identities, and graphics for direct commercial use across a 4-year run.',
-    detailedDesc: `BlackCat Studios was a solo-founded freelance design studio operating from 2019 to 2023. I independently sourced clients, assessed their needs, managed projects from concept to delivery, and produced all creative work myself.
+    title: 'Manipulation',
+    tags: ['UI/UX Design','Godot','Interaction Design', 'Game Design','Art Direction','Visual Design','Indie Game','Roguelite','RPG','Puzzle Mechanics','Usability', 'HUD Design','Creative Direction','Steam Release','2025'],
+    linkLabel:'View Steam Page',
+    link: 'https://store.steampowered.com/app/3937580/Manipulation/',
+    images: [
+      'Assets/Dev/manipulation/1.png',
+      'Assets/Dev/manipulation/manipulationTrailer.mp4',
+      'Assets/Dev/manipulation/2.png',
+      'Assets/Dev/manipulation/3.png',
+      'Assets/Dev/manipulation/4.png',
+      'Assets/Dev/manipulation/5.png'
+    ],
+    desc: 'UI/UX and art direction for an indie roguelite mini-RPG available on Steam.',
+    detailedDesc: `Manipulation is an indie roguelite mini-RPG developed by Creative Guild LLC and released on Steam as the studio’s first title.
 
-The studio specialised in brand identity — logos, typography systems, colour palettes, and supporting graphics intended for direct commercial use. All client relationships were managed directly, including brief-taking, revision cycles, and final delivery.
+I served as the UI/UX designer and art director for the project, shaping the visual experience and user interaction systems. My role involved designing intuitive interfaces, establishing visual direction, and ensuring cohesion between gameplay and presentation.
 
-Over four years, the studio produced work across multiple industries. Shutting down BlackCat was a deliberate decision to redirect energy toward larger collaborative ventures — specifically Vision Forge.`
+The game is structured like an escape room — quick but challenging, small but immersive, and designed for replayability. The design approach focused on clarity, feedback, and immersion to support this gameplay loop.`
   },
 
   {
-    title: 'COMING SOON',
-    tags: ['-'],
-    link: '', images: [],
-    desc: 'This page is under construction!.',
-    detailedDesc: `This page is under construction. Please return soon as it is recieving constant updates! Thank you!.`
+    title: 'We Care | Low Cost Spay & Neuter Clinic',
+    tags: ['Brand Identity', 'Graphic Design', 'Rebranding', 'Iconography', 'Client Work'],
+    link: 'https://www.facebook.com/wecaresnclinic',
+    linkLabel: 'View Facebook Page',
+    images: [
+      'Assets/Des/weCare/1.png',
+      'Assets/Des/weCare/2.png',
+      'Assets/Des/weCare/3.png'
+    ],
+    desc: 'Full rebrand with two design iterations and a complete iconography system for a veterinary clinic.',
+    detailedDesc: `We Care Low Cost Spay & Neuter Clinic, based in Georgia, USA, required a refreshed brand identity to better communicate their services and community-focused mission.
+
+The project involved two full design passes, allowing for exploration and refinement of visual direction. A key component of the work was the development of a complete iconography system to support clear communication of services and procedures.
+
+The resulting identity system was designed to be both friendly and informative, balancing professionalism with approachability for a wide range of pet owners.`
+  },
+
+  {
+    title: 'FEU BRAVE @ 100 Logo Design Competition',
+    tags: ['Logo Design', 'Graphic Design', 'Competition', 'Art Direction', 'Art Deco'],
+    link: '',
+    images: [
+      'Assets/Des/feu100/1.png'
+    ],
+    desc: 'Logo design entry for FEU’s 100th anniversary, following an Art Deco-inspired theme.',
+    detailedDesc: `This project was a design submission for the FEU BRAVE @ 100 Logo Design Competition, commemorating the university’s 100th anniversary.
+
+The brief required adherence to an Art Deco theme, drawing from historical design elements while maintaining relevance to a modern academic institution. The design process involved researching period-accurate motifs, geometric forms, and typography styles associated with Art Deco.
+
+The final logo aimed to balance heritage and modernity, reflecting both the institution’s legacy and its forward-looking identity.`
+  },
+
+  {
+    title: 'CoKrispiyu',
+    tags: ['Brand Identity', 'Graphic Design', 'Marketing Collateral', 'Menu Design', 'Advertising'],
+    link: '',
+    images: [
+      'Assets/Des/coKrisPiyu/1.png',
+      'Assets/Des/coKrisPiyu/2.png',
+      'Assets/Des/coKrisPiyu/3.png'
+    ],
+    desc: 'Full branding and marketing assets for a temporary coffee shop, including menu, banner, and ads.',
+    detailedDesc: `CoKrispiyu was a temporary coffee shop venture for which I developed the complete visual identity and marketing materials.
+
+The scope included logo design, brand identity, menu layout, promotional banners, and advertisement materials. The design direction aimed to create a distinct and memorable brand presence despite the short-term nature of the business.
+
+All assets were designed for quick deployment and strong visual impact, ensuring consistency across customer touchpoints.`
+  },
+
+  {
+    title: 'Cruising Cats',
+    tags: ['Brand Identity', 'Graphic Design', 'Rebranding', 'Client Work', 'Marketing Collateral'],
+    link: 'https://www.facebook.com/CruisingCats',
+    linkLabel: 'View Facebook Page',
+    images: [
+    'Assets/Des/cruisingCats./1.png',
+    'Assets/Des/cruisingCats./2.png'
+    ],
+    desc: 'Rebrand for a housecall-exclusive pet grooming service, including logo, pricing materials, and advertisements.',
+    detailedDesc: `Cruising Cats is a housecall-exclusive pet grooming service based in Savannah, Georgia, USA. I was commissioned to redesign their brand identity to better reflect their approachable, pet-friendly service model.
+
+The project included a full logo redesign, as well as the creation of supporting materials such as price lists and promotional advertisements. The goal was to create a cohesive and accessible visual identity that could be easily applied across both print and digital platforms.
+
+The final outputs were designed with clarity and usability in mind, ensuring customers could quickly understand services offered while reinforcing brand recognition.`
+  },
+
+  {
+    title: 'Haven Hands',
+    tags: ['Brand Identity', 'Graphic Design', 'Social Impact', 'UI/UX', 'Concept Design'],
+    link: '',
+    images: [
+      'Assets/Des/havenHands/1.png'
+    ],
+    desc: 'Brand design for a calamity-response hotline focused on accessibility and clarity during emergencies.',
+    detailedDesc: `Haven Hands is a conceptual project centered on a help hotline designed for use during typhoons and other natural calamities.
+
+I developed the full brand identity for the project, focusing on clarity, trust, and accessibility under high-stress situations. Design decisions prioritized readability, strong visual hierarchy, and intuitive recognition to ensure usability during emergencies.
+
+The project demonstrates an application of design for social good, where visual communication directly impacts user response and accessibility.`
+  },
+
+  {
+    title: 'The Algorithmic',
+    tags: ['Editorial Design', 'Publication', 'Layout Design', 'Leadership', 'Writing'],
+    link: '',
+    images: [
+      'Assets/Des/theAlgorithmic/1.png',
+      'Assets/Des/theAlgorithmic/2.png'
+    ],
+    desc: 'Editor-in-Chief and lead designer for FEU Tech ACM’s first official publication.',
+    detailedDesc: `The Algorithmic is the first official publication of the FEU Tech ACM Student Chapter.
+
+I served as Editor-in-Chief, overseeing the publication’s direction while also handling the full layout and visual design. Responsibilities included structuring content, designing page systems, and ensuring visual consistency across issues.
+
+In addition to leadership and design, I also contributed as a writer for one issue. The project reflects both editorial management and hands-on execution in publication design.`
   }
-  
 ];
 
 /* ──────── CERTIFICATIONS & AWARDS ──────── */
@@ -1454,23 +1594,27 @@ const SKILLS_B = ['Brand Identity','Graphic Design','Adobe CC','Logo Design','So
 
 /* ──────── AFFILIATIONS ──────── */
 const AFFILIATIONS = [
-  { name:'Vision Forge', role:'Co-Founder & Chief Operating Officer · 2025–Present', icon:'⚡', img:'', link:'' },
-  { name:'FEU Tech ACM Student Chapter', role:'Director for Publications · 2024–Present', icon:'◆', img:'', link:'' },
-  { name:'FEU Tech ACM — The Innovator', role:'Editor in Chief · 2024–Present', icon:'📰', img:'', link:'' },
-  { name:'FIT Student Coordinating Council', role:'Creatives Officer · 2023–Present', icon:'✦', img:'', link:'' },
-  { name:'TAMLabs', role:'Member · FEU Institute of Technology', icon:'🔬', img:'', link:'' },
-  { name:'Google Developer Student Clubs', role:'Member · FEU Institute of Technology', icon:'🌐', img:'', link:'' },
-  { name:'Reboot & Map — FIT JPCS', role:'Host · FEU Junior Philippine Computer Society', icon:'🎙️', img:'', link:'' },
+  { name:'Vision Forge', role:'Co-Founder & Chief Operating Officer · 2025–Present', icon:'🚀', img:'', link:'' },
+  { name:'Creative Guild LLC', role:'Art / UI/UX Director · 2025–Present', icon:'🎮', img:'', link:'' },
+  { name:'FEU Tech ACM Student Chapter', role:'Director for Publications · 2024–2025', icon:'💻', img:'', link:'' },
+  { name:'FEU Tech ACM — The Innovator', role:'Editor in Chief · 2024–2025', icon:'📰', img:'', link:'' },
+  { name:'FEU Institute of Technology Student Coordinating Council', role:'Creatives Officer · 2023–Present', icon:'🎨', img:'', link:'' },
+  { name:'FEU Tech NSRC', role:'Group Commandant · 2025–Present', icon:'🛡️', img:'', link:'' },
+  { name:'TAMLabs Incubation Program', role:'Graduate · 2025', icon:'🧪', img:'', link:'' },
+  { name:'FEU Tech JPCS — Reboot & Map', role:'Event Host · 2021', icon:'🎙️', img:'', link:'' },
   { name:'FEU HS Speech & Debate Society', role:'Inaugural Co-President · 2022–2023', icon:'🏛️', img:'', link:'' },
-  { name:'Project Diversify Online', role:'Philippine Associate — Intercultural Relations', icon:'🌏', img:'', link:'' },
+  { name:'Project Diversify', role:'Philippine Associate · Intercultural Relations', icon:'🌍', img:'', link:'' },
 ];
+
 
 /* ──────── AWARDS ──────── */
 const AWARDS = [
-  { icon:'🥉', title:'3rd Place, Speaking Competition', sub:'YMCA Manila — Regional Collegiate Level · 2025' },
+  { icon:'🏆', title:'Champion, Philippine Voices of Peace Poetry Competition', sub:'Philippine Voices of Peace · 2025' },
+  { icon:'🥈', title:'2nd Runner-Up, ESCON Case Presentation Competition', sub:'University of the Philippines Diliman · 2025' },
+  { icon:'🥈', title:'2nd Runner-Up, Speaking Competition', sub:'YMCA Manila — Regional Collegiate Level · 2025' },
   { icon:'🎤', title:'Extemporaneous Speaking Champion', sub:'FEU Institute of Technology · 2024' },
-  { icon:'🔬', title:'Invited Research Guest Speaker', sub:'FEU High School Research Fair · 2024' },
-  { icon:'🏆', title:'Best ICT Research — Project Hydrofalis', sub:'Far Eastern University High School · 2023' },
+  { icon:'🧠', title:'Invited Research Guest Speaker', sub:'FEU High School Research Fair · 2024' },
+  { icon:'🔬', title:'Best ICT Research — Project Hydrofalis', sub:'Far Eastern University High School · 2023' },
   { icon:'⭐', title:'Academic Excellence Awardee', sub:'Far Eastern University High School · A.Y. 2022–2023' },
   { icon:'🎓', title:'Grade 11 & 12 Honors Student', sub:'Far Eastern University High School · 2021–2023' },
   { icon:'🏅', title:'Leadership Award', sub:'University of the East · 2021' },
@@ -1479,16 +1623,26 @@ const AWARDS = [
 
 /* ──────── HAPPENINGS ──────── */
 const HAPPENINGS = [
-  { date:'2025', title:'Vision Forge — The Dotted Ruler Launch', desc:'Co-Founder & COO · Production & Operations Lead' },
-  { date:'2025', title:'YMCA Manila Speaking Competition', desc:'3rd Place · Regional Collegiate Level' },
-  { date:'2024', title:'The Innovator — Inaugural Issue', desc:'Editor in Chief · FEU Tech ACM Official Publication' },
-  { date:'2024', title:'Extemporaneous Speaking Champion', desc:'FEU Tech PILIPinas / Pinasambit' },
-  { date:'2024', title:'FEU HS Research Fair — Guest Speaker', desc:'Invited speaker representing Project Hydrofalis' },
-  { date:'2024', title:'NSTP2 Bahay Kalinga Skill Transfer', desc:'Team Leader · Physics session for youth ages 8–14, QC' },
-  { date:'2023', title:'FEU HS Speech & Debate Society Founded', desc:'Inaugural Co-President — wrote bylaws, led accreditation' },
-  { date:'2023', title:'Keep it Accurate Workshop', desc:'Fact-checking, source credibility · Far Eastern University' },
-  { date:'2021', title:'Career Boost Seminar', desc:'Building Your Brand · Far Eastern University' },
-  { date:'2019', title:'CPR Caravan Training', desc:'Philippine Red Cross · University of the East' },
+  { date:'2025', title:'Vision Forge — The Dotted Ruler', desc:'Co-Founder & COO · Leading production, operations, and business strategy' },
+  { date:'2025', title:'Manipulation — Indie Game Release', desc:'Art Director & UI/UX Designer · Creative Guild LLC (Available on Steam)' },
+  { date:'2025', title:'TAMLabs Incubation Program', desc:'Graduate · Startup incubation focused on product development, validation, and pitching' },
+
+  { date:'2025', title:'Philippine Voices of Peace Poetry Competition', desc:'Champion' },
+  { date:'2025', title:'ESCON Case Presentation Competition', desc:'2nd Runner-Up · University of the Philippines Diliman' },
+  { date:'2025', title:'YMCA Manila Academic Meet', desc:'2nd Runner-Up · Regional Collegiate Speaking Competition' },
+
+  { date:'2025', title:'Indies Ascent & ACM F++', desc:'Guest Speaker & Mentor · Talks on game development, design, and creative industry' },
+  { date:'2025', title:'CPEO Create & Conquer Hackathon', desc:'Team Lead · Led team in competitive development environment' },
+
+  { date:'2024', title:'The Innovator — Inaugural Publication', desc:'Editor in Chief · FEU Tech ACM official publication' },
+  { date:'2024', title:'Extemporaneous Speaking Champion', desc:'FEU Tech PILIPinas' },
+  { date:'2024', title:'NSTP2 Bahay Kalinga Skill Transfer', desc:'Team Leader · Organized physics-based learning session for youth (Quezon City)' },
+
+  { date:'2023', title:'FEU HS Speech & Debate Society', desc:'Inaugural Co-President · Founded organization, wrote bylaws, led accreditation' },
+  { date:'2023', title:'Project Hydrofalis', desc:'Lead Researcher · Arduino-based water filtration system, Best ICT Research' },
+
+  { date:'2021', title:'Reboot & Map — FEU Tech JPCS', desc:'Event Host · Facilitated program flow and audience engagement' },
+  { date:'2019', title:'CPR Caravan Training', desc:'Philippine Red Cross · Emergency response training' },
 ];
 
 
@@ -1839,6 +1993,15 @@ buildCoverflow(AWARDSANDFEATS, {
   prev:  'semPrev',  next: 'semNext'
 });
 
+buildCoverflow(BADGES, {
+  track: 'certsTrackB', dots: 'certsDotsB',
+  prev:  'certPrevB',   next: 'certNextB'
+});
+buildCoverflow(AWARDSANDFEATS, {
+  track: 'semTrackB', dots: 'semDotsB',
+  prev:  'semPrevB',  next: 'semNextB'
+});
+
 renderSkills(SKILLS_A, 'skillsA');
 renderSkills(SKILLS_B, 'skillsB');
 renderList(AFFILIATIONS, 'affilListA', buildAffil);
@@ -1904,6 +2067,19 @@ document.addEventListener('mouseover', e => {
   draw();
 })();
 
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if(window.scrollY <= 10){
+    nav.classList.remove('scrolled');
+    nav.classList.add('at-top');
+  } else {
+    nav.classList.remove('at-top');
+    nav.classList.add('scrolled');
+  }
+});
+
+document.querySelector('nav').classList.add('at-top');
+
 
 /* ═══════════════════════════════════════════
    HERO WORDS
@@ -1925,6 +2101,9 @@ document.getElementById('photoA').classList.add('photo-slide-left');
    FLIP
 ═══════════════════════════════════════════ */
 const flipBtn=document.getElementById('flipBtn');
+flipBtn.classList.add('pulse');
+flipBtn.addEventListener('click', () => flipBtn.classList.remove('pulse'), { once: true });
+console.log('pulse added:', flipBtn.classList.contains('pulse'));
 const logoRole=document.getElementById('logoRole');
 const portfolioLabel=document.getElementById('portfolioLabel');
 const footerLabel=document.getElementById('footerLabel');
