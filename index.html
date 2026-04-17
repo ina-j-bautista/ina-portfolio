@@ -62,7 +62,6 @@
   display: block;
 }
 
-/* Animations now use plain translateX — no conflict with the parent's translateY(-50%) */
 @keyframes photoInLeft {
   from { transform: translateX(-80px); opacity: 0; }
   to   { transform: translateX(0);     opacity: 1; }
@@ -914,7 +913,7 @@ nav.scrolled::before{
     <span class="hero-word" style="--i:1">DEVELOPER</span>
     <span class="hero-word" style="--i:2">PROBLEM</span>
     <span class="hero-word" style="--i:3">SOLVER</span>
-    <span class="hero-word" style="--i:4">ENGINEER</span>
+    <span class="hero-word" style="--i:4">SOFTWARE ENGINEER</span>
   </div>
 
   <div class="hw" id="hwB">
@@ -977,9 +976,8 @@ nav.scrolled::before{
   <div class="divider"></div>
 
   <!--
-    ✏️ AWARDSANDFEATS SECTION
-    To add more coverflow sections: copy this block, change all IDs,
-    add a new data array in JS, and call buildCoverflow() in BOOT.
+    AWARDS AND FEATS A
+
   -->
   <div class="section-wrap" id="awardsA">
     <div class="section-header reveal">
@@ -1031,7 +1029,7 @@ nav.scrolled::before{
     </div>
   </div>
 
-</div><!-- /contentA -->
+</div>
 
 
 <!-- PORTFOLIO B -->
@@ -1065,9 +1063,8 @@ nav.scrolled::before{
   <div class="divider"></div>
 
   <!--
-    ✏️ AWARDSANDFEATS SECTION
-    To add more coverflow sections: copy this block, change all IDs,
-    add a new data array in JS, and call buildCoverflow() in BOOT.
+    AWARDS AND FEATS B
+
   -->
   <div class="section-wrap" id="awardsB">
     <div class="section-header reveal">
@@ -1123,7 +1120,7 @@ nav.scrolled::before{
     </div>
   </div>
 
-</div><!-- /contentB -->
+</div>
 
 
 <footer>
@@ -1133,27 +1130,6 @@ nav.scrolled::before{
 
 
 <script>
-/* ═══════════════════════════════════════════════════════════════
-   ✏️  ALL YOUR CONTENT LIVES HERE — edit freely
-   ═══════════════════════════════════════════════════════════════
-
-   PROJECT FIELDS:
-     title        — card title
-     tags         — array of tag strings
-     link         — URL ('' to hide button)
-     images       — array of paths, supports .mp4/.webm/.mov too
-     desc         — short card description
-     detailedDesc — longer modal description (paragraphs separated by blank line)
-
-   COVERFLOW FIELDS (BADGES, AWARDSANDFEATS, any new section):
-     name    — card title
-     sub     — subtitle / issuer line
-     icon    — emoji fallback when no img
-     img     — badge image path (or '')
-     link    — "Learn More" URL (or '')
-     images  — array of image paths for modal carousel (or [] for icon hero)
-     body    — full article text, paragraphs separated by blank line
-   ═══════════════════════════════════════════════════════════════ */
 
 /* ──────── PORTFOLIO A — DEV PROJECTS ──────── */
 const PROJECTS_A = [
@@ -1496,12 +1472,6 @@ Topics covered included identifying misinformation, understanding media bias, ap
 ];
 
 /* ──────── AWARDSANDFEATS & WORKSHOPS ──────── */
-/*
-  ✏️ TO ADD A NEW COVERFLOW SECTION:
-  1. Create a data array here with the same shape
-  2. Copy the seminars HTML block in the page, change all IDs
-  3. Add a buildCoverflow() call in the BOOT section below
-*/
 const AWARDSANDFEATS = [
   {
     name: 'Guest Speaker, F++ 2025',
@@ -1622,7 +1592,7 @@ const AWARDS = [
 
 /* ──────── HAPPENINGS ──────── */
 const HAPPENINGS = [
-  { date:'2025', title:'Vision Forge — The Dotted Ruler', desc:'Co-Founder & COO · Leading production, operations, and business strategy' },
+  { date:'2025', title:'Vision Forge — In Development Product', desc:'Co-Founder & COO · Leading production, operations, and business strategy' },
   { date:'2025', title:'Manipulation — Indie Game Release', desc:'Art Director & UI/UX Designer · Creative Guild LLC (Available on Steam)' },
   { date:'2025', title:'TAMLabs Incubation Program', desc:'Graduate · Startup incubation focused on product development, validation, and pitching' },
 
@@ -1859,12 +1829,6 @@ const buildHappening = h =>
 
 /* ═══════════════════════════════════════════
    GENERIC COVERFLOW ENGINE
-   ─────────────────────────────────────────
-   buildCoverflow(data, ids)
-     data — array with fields: name, sub, icon, img, link, images, body
-     ids  — { track, dots, prev, next }  ← must match your HTML element IDs
-
-   Side cards: click to navigate.  Center card: click to open article modal.
 ═══════════════════════════════════════════ */
 function buildCoverflow(data, ids) {
   const track = document.getElementById(ids.track);
@@ -1900,7 +1864,6 @@ function buildCoverflow(data, ids) {
     dots.querySelectorAll('.certs-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
   }
 
-  /* Side card click → navigate; center card click → open article modal */
   track.querySelectorAll('.cert-card').forEach(c => {
     c.addEventListener('click', () => {
       const i = parseInt(c.dataset.i);
@@ -1982,7 +1945,6 @@ renderProjects(PROJECTS_B, 'gridB');
 attachCardListeners(PROJECTS_A, 'gridA');
 attachCardListeners(PROJECTS_B, 'gridB');
 
-/* Coverflow sections — add more by calling buildCoverflow() with a new data array + IDs */
 buildCoverflow(BADGES, {
   track: 'certsTrack', dots: 'certsDots',
   prev:  'certPrev',   next: 'certNext'
